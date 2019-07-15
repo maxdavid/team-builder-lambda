@@ -11,19 +11,13 @@ const Form = props => {
     if (props.memberToEdit) setInputValue(props.memberToEdit);
   }, [props.memberToEdit]);
 
-  const updateEditing = () => {
-    setInputValue({
-      name: '',
-      email: '',
-      role: 'UX Designer',
-      teamName: 'Build Week'
-    });
-    props.reset();
-  };
+  useEffect(() => {
+    if (props.memberToEdit) setInputValue(props.memberToEdit);
+  }, [props.memberToEdit]);
 
   const submit = e => {
     e.preventDefault();
-    if (props.memberToEdit) props.edit(inputValue);
+    if (props.memberToEdit) props.editMember(inputValue);
     else props.addMember(inputValue);
     setInputValue({
       name: '',
@@ -79,7 +73,7 @@ const Form = props => {
           </select>
         </div>
         <div className='buttons my-4 mx-auto'>
-          <input
+          <button
             className={`border-2 rounded border-full border-gray-400 py-1 px-4 text-lg cursor-pointer${
               +(
                 inputValue.name === '' ||
@@ -91,7 +85,9 @@ const Form = props => {
             }`}
             type='submit'
             onSubmit={e => submit(e)}
-          />
+          >
+            {props.memberToEdit ? 'Update' : 'Add'}
+          </button>
           {/* <input className='formButton' type='reset' onClick={resetForm} /> */}
         </div>
       </form>
